@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- =========================================================== -->
+	<!-- POM relationships -->
+	<!-- =========================================================== -->
+
+	<!-- Maven coordinates -->
+	<groupId>org.funz</groupId>
+	<artifactId>funz-parent</artifactId>
+	<version>1.9.0-SNAPSHOT</version>
+
+	<!-- Dependencies -->
+	<dependencies />
+
+	<!-- =========================================================== -->
+	<!-- General project information -->
+	<!-- =========================================================== -->
+
+	<!-- General project information -->
+	<name>Funz parent POM</name>
+
+	<!-- Project licenses -->
+	<licenses>
+		<license>
+			<name>BSD 2-Clause "Simplified" License</name>
+		</license>
+	</licenses>
+
+	<!-- =========================================================== -->
+	<!-- Build settings -->
+	<!-- =========================================================== -->
+
+	<!-- Packaging -->
+	<packaging>pom</packaging>
+
+	<!-- Properties -->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<org.osgi.framework.version>[1.5, 2.0)</org.osgi.framework.version>
+	</properties>
+
+
+	<!-- Build -->
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>4.0.0</version>
+					<extensions>true</extensions>
+					<executions>
+						<execution>
+							<goals>
+								<goal>deploy</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- Check Maven and Java versions are okay -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>3.0.0-M2</version>
+					<executions>
+						<execution>
+							<id>enforce-versions</id>
+							<goals>
+								<goal>enforce</goal>
+							</goals>
+							<configuration>
+								<rules>
+									<requireMavenVersion>
+										<version>2.0.6</version>
+									</requireMavenVersion>
+									<requireJavaVersion>
+										<version>1.8</version>
+									</requireJavaVersion>
+								</rules>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.8</version>
+				</plugin>
+				<!-- Force the use of Java8 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.1</version>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>0.8.2</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+						</execution>
+						<!-- attached to Maven test phase -->
+						<execution>
+							<id>report</id>
+							<phase>test</phase>
+							<goals>
+								<goal>report</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>coverage/</outputDirectory>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>3.1.1</version>
+					<configuration>
+						<reportOutputDirectory>${basedir}</reportOutputDirectory>
+						<destDir>doc</destDir>
+						<additionalparam>-Xdoclint:none</additionalparam>
+						<failOnError>false</failOnError>
+						<failOnWarnings>false</failOnWarnings>
+						<doclint>none</doclint>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- =========================================================== -->
+	<!-- Build environment -->
+	<!-- =========================================================== -->
+
+	<!-- Development environment information -->
+	<ciManagement>
+		<system>Travis-CI</system>
+		<url>https://travis-ci.org/Funz/funz-core</url>
+	</ciManagement>
+
+	<!-- Distribution management -->
+	<distributionManagement />
+
+</project>
+
